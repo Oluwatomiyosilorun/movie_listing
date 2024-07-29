@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class UserCreate(BaseModel):
@@ -20,7 +21,7 @@ class Token(BaseModel):
 
 
 class TokenData(BaseModel):
-    username: str | None = None
+    username: Optional[str] = None
 
 
 class MovieCreate(BaseModel):
@@ -55,7 +56,7 @@ class Rating(BaseModel):
 
 class CommentCreate(BaseModel):
     movie_id: int
-    parent_id: int | None
+    parent_id: Optional[int] = None
     text: str
 
 
@@ -63,7 +64,7 @@ class Comment(BaseModel):
     id: int
     movie_id: int
     user_id: int
-    parent_id: int | None
+    parent_id: Optional[int] = None
     text: str
 
     class Config:
