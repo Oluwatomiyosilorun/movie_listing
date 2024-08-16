@@ -36,7 +36,7 @@ async def create_comment(
         movie_id=movie_id,
         user_id=current_user.id,
         parent_comment_id=comment.parent_comment_id,
-        created_at=datetime.utcnow()  # Assuming you want to include this field
+        created_at=datetime.utcnow()
     )
 
 
@@ -54,7 +54,6 @@ async def read_comments(movie_id: int, skip: int = 0, limit: int = 10):
 
         comments = await database.fetch_all(query)
 
-        # Ensure that none of the fields are None
         return [
             schemas.Comment(
                 id=comment["id"],
@@ -62,7 +61,7 @@ async def read_comments(movie_id: int, skip: int = 0, limit: int = 10):
                 movie_id=comment["movie_id"],
                 user_id=comment["user_id"],
                 parent_comment_id=comment["parent_comment_id"],
-                created_at=comment["created_at"] or datetime.utcnow()  # Provide a default if None
+                created_at=comment["created_at"] or datetime.utcnow()
             )
             for comment in comments
         ]
