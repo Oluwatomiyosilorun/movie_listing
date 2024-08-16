@@ -15,7 +15,7 @@ async def get_current_user(token: str = Depends(utils.oauth2_scheme)):
     return await utils.get_current_user(token)
 
 
-@router.post("/movies/{movie_id}/comments/", response_model=schemas.Comment)
+@router.post("/{movie_id}", response_model=schemas.Comment)
 async def create_comment(
         movie_id: int,
         comment: schemas.CommentCreate,
@@ -40,7 +40,7 @@ async def create_comment(
     )
 
 
-@router.get("/movies/{movie_id}/comments/", response_model=List[schemas.Comment])
+@router.get("/{movie_id}", response_model=List[schemas.Comment])
 async def read_comments(movie_id: int, skip: int = 0, limit: int = 10):
     try:
         query = select(
@@ -71,7 +71,7 @@ async def read_comments(movie_id: int, skip: int = 0, limit: int = 10):
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
-@router.delete("/comments/{comment_id}", response_model=dict)
+@router.delete("/{comment_id}", response_model=dict)
 async def delete_comment(comment_id: int, current_user: models.User = Depends(get_current_user)):
     query = select(models.Comment).where(models.Comment.id == comment_id)
     db_comment = await database.fetch_one(query)

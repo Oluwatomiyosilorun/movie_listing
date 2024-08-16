@@ -17,7 +17,7 @@ async def get_current_user(token: str = Depends(utils.oauth2_scheme)):
     return await utils.get_current_user(token)
 
 
-@router.post("/movies/", response_model=schemas.Movie)
+@router.post("/", response_model=schemas.Movie)
 async def create_movie(movie: schemas.MovieCreate, current_user: models.User = Depends(utils.get_current_user)):
     release_date = movie.release_date or datetime.utcnow()
 
@@ -53,7 +53,7 @@ async def create_movie(movie: schemas.MovieCreate, current_user: models.User = D
         )
 
 
-@router.get("/movies/", response_model=List[schemas.Movie])
+@router.get("/", response_model=List[schemas.Movie])
 async def read_movies(skip: int = 0, limit: int = 10):
     query = select(
         models.Movie.id,
@@ -80,7 +80,7 @@ async def read_movies(skip: int = 0, limit: int = 10):
     ]
 
 
-@router.get("/movies/{movie_id}", response_model=schemas.Movie)
+@router.get("/{movie_id}", response_model=schemas.Movie)
 async def read_movie(movie_id: int):
     query = select(
         models.Movie.id,
@@ -104,7 +104,7 @@ async def read_movie(movie_id: int):
     )
 
 
-@router.put("/movies/{movie_id}", response_model=schemas.Movie)
+@router.put("/{movie_id}", response_model=schemas.Movie)
 async def update_movie(movie_id: int, movie: schemas.MovieCreate,
                        current_user: models.User = Depends(get_current_user)):
     query = select(models.Movie).where(models.Movie.id == movie_id)
@@ -123,7 +123,7 @@ async def update_movie(movie_id: int, movie: schemas.MovieCreate,
     return {**movie.dict(), "id": movie_id, "owner_id": current_user.id}
 
 
-@router.delete("/movies/{movie_id}", response_model=dict)
+@router.delete("/{movie_id}", response_model=dict)
 async def delete_movie(movie_id: int, current_user: models.User = Depends(utils.get_current_user)):
     query = select(models.Movie).where(models.Movie.id == movie_id)
     db_movie = await database.fetch_one(query)

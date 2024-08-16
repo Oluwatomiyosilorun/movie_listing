@@ -28,7 +28,7 @@ async def test_register_user(test_user_data):
         if response.status_code == 200:
             assert response.json()["username"] == test_user_data["username"]
             assert response.json()["email"] == test_user_data["email"]
-        elif response.status_code == 409:  # Handle case where the user already exists
+        elif response.status_code == 409:
             assert response.json()["detail"] == "Username or email already registered"
         else:
             pytest.fail(f"Unexpected status code: {response.status_code}")
