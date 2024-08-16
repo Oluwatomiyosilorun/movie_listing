@@ -1,6 +1,7 @@
 **Movie Listing API**
 
-This FastAPI-based project is a RESTful API that allows users to list movies, add comments, rate them, and manage user authentication using JWT (JSON Web Tokens). It ensures that only the movie owner can edit or delete their listings.
+This FastAPI-based project is a RESTful API that allows users to list movies, add comments, rate them, and manage user authentication using JWT (JSON Web Tokens). 
+It ensures that only the movie owner can edit or delete their listings.
 
 **Features**
 
@@ -25,7 +26,7 @@ Testing: Pytest, HTTPX
 **Getting Started**
 
 Clone the repo: 
-    git clone https://github.com/yourusername/movie-listing-api.git
+    git clone https://github.com/Oluwatomiyosilorun/movie_listing
 
 Install dependencies: 
     pip install -r requirements.txt
