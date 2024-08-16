@@ -53,7 +53,7 @@ async def test_create_rating(stored_auth_token, stored_movie_id):
     async with AsyncClient(app=app, base_url="http://test") as ac:
         headers = {"Authorization": f"Bearer {auth_token_value}"}
         rating_data = {"rating": 4.5}
-        response = await ac.post(f"/ratings/movies/{movie_rating_id}/ratings/", json=rating_data, headers=headers)
+        response = await ac.post(f"/ratings/{movie_rating_id}", json=rating_data, headers=headers)
         assert response.status_code == 200, f"Failed to create rating: {response.text}"
         assert response.json()["rating"] == rating_data["rating"]
 
@@ -61,6 +61,6 @@ async def test_create_rating(stored_auth_token, stored_movie_id):
 @pytest.mark.asyncio
 async def test_read_ratings():
     async with AsyncClient(app=app, base_url="http://test") as ac:
-        response = await ac.get(f"/ratings/movies/{movie_rating_id}/ratings/")
+        response = await ac.get(f"/ratings/{movie_rating_id}")
         assert response.status_code == 200, f"Failed to read ratings: {response.text}"
         assert len(response.json()) > 0, "No ratings found"

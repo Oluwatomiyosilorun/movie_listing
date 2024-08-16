@@ -12,7 +12,7 @@ async def get_current_user(token: str = Depends(utils.oauth2_scheme)):
     return await utils.get_current_user(token)
 
 
-@router.post("/movies/{movie_id}/ratings/", response_model=schemas.Rating)
+@router.post("/{movie_id}", response_model=schemas.Rating)
 async def create_rating(movie_id: int, rating: schemas.RatingCreate,
                         current_user: models.User = Depends(get_current_user)):
     query = insert(models.Rating).values(
@@ -24,7 +24,7 @@ async def create_rating(movie_id: int, rating: schemas.RatingCreate,
     return {**rating.dict(), "id": last_record_id, "movie_id": movie_id, "user_id": current_user.id}
 
 
-@router.get("/movies/{movie_id}/ratings/", response_model=List[schemas.Rating])
+@router.get("/{movie_id}", response_model=List[schemas.Rating])
 async def read_ratings(movie_id: int, skip: int = 0, limit: int = 10):
     query = select(models.Rating).where(models.Rating.movie_id == movie_id).offset(skip).limit(limit)
     return await database.fetch_all(query)
